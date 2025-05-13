@@ -1,0 +1,38 @@
+{
+  "name": "scroll-gallery-slider",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.html",
+  "author": "",
+  "license": "ISC",
+  "scripts": {
+		"sass": "sass --style compressed --source-map --quiet source/styles/main.scss:dist/styles/main.css",
+		"js": "rollup --config config/rollup.config.mjs --no-sourcemap --silent",
+		"process:sass": "node config/echo \"Sass started at: $(date +%H:%M:%S)\" -f 94 && npm --silent run sass && node config/echo \"Sass finished\" -f 94",
+		"process:js": "node config/echo \"JS started at: $(date +%H:%M:%S)\" -f 95 && npm --silent run js && node config/echo \"JS finished\" -f 95",
+		"watch:sass": "nodemon --watch source/styles --ext scss --silent --quiet --exec \"npm-run-all process:sass\"",
+		"watch:js": "nodemon --watch source/scripts/ --ext js --silent --quiet --exec \"npm-run-all process:js\"",
+		"browsersync": "browser-sync start --config config/bs-config.cjs",
+		"dev": "run-p watch:sass watch:js",
+		"dev-bs": "run-p watch:sass watch:js browsersync"
+	},
+  "devDependencies": {
+		"@babel/core": "^7.25.2",
+		"@popperjs/core": "^2.11.8",
+		"@rollup/plugin-babel": "^6.0.4",
+		"@rollup/plugin-commonjs": "^23.0.7",
+		"@rollup/plugin-multi-entry": "^6.0.1",
+		"@rollup/plugin-node-resolve": "^15.3.0",
+		"@rollup/plugin-terser": "^0.1.0",
+		"bootstrap": "^5.3.3",
+		"browser-sync": "^2.29.3",
+		"nodemon": "^2.0.22",
+		"npm-run-all": "^4.1.5",
+		"rollup": "^3.29.5",
+		"rollup-plugin-folder-input": "^1.0.1",
+		"sass": "^1.79.3"
+	},
+  "dependencies": {
+    "gsap": "^3.13.0"
+  }
+}
