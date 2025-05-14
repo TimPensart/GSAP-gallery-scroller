@@ -1,9 +1,15 @@
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { GSDevTools } from "gsap/GSDevTools";
 import { MotionPathPlugin } from "gsap/MotionPathPlugin";
 import { CustomEase } from "gsap/CustomEase";
-gsap.registerPlugin(ScrollTrigger, GSDevTools, MotionPathPlugin);
+import { ScrollSmoother } from "gsap/ScrollSmoother";
+
+gsap.registerPlugin(ScrollTrigger, MotionPathPlugin, ScrollSmoother, CustomEase);
+
+const smoother = ScrollSmoother.create({
+    smooth: 1,
+    effects: true,
+});
 
 const gallerySliderWrapper = document.getElementById("slider-wrapper");
 
@@ -27,12 +33,15 @@ for (let i = 0; i < 7; i++) {
 }
 
 // add animations and labels to the timeline
+const responsiveStagger = window.innerWidth < 1024 ? 0.125 : 0.075;
+
+console.log(responsiveStagger);
 
 gsap.to(slides, {
     immediateRender: true,
-    ease: CustomEase.create("custom", "M0,0 C0.895,0.699 0.104,0.297 1,1 "),
+    ease: CustomEase.create("custom", "M0,0 C0.792,0.5 0.21,0.498 1,1 "),
     stagger: {
-        each: 0.07,
+        each: responsiveStagger,
         ease: "none",
     },
     motionPath: {
@@ -44,12 +53,11 @@ gsap.to(slides, {
     },
     scrollTrigger: {
         fastScrollEnd: true,
+        pin: "#slider-wrapper",
+        pinSpacing: false,
         trigger: ".gallery-slider",
         scrub: 1.2,
         start: "top center",
         end: "bottom bottom",
-        markers: true,
-        pinSpacing: false,
-        ease: "none",
     },
 });

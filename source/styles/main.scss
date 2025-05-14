@@ -1,3 +1,15 @@
+@property --gradient-start {
+    syntax: "<color>";
+    initial-value: #ffea80;
+    inherits: false;
+}
+
+@property --gradient-end {
+    syntax: "<color>";
+    initial-value: #ffd600;
+    inherits: false;
+}
+
 body {
     font-family: "Open Sans", sans-serif;
     margin: 0;
@@ -14,27 +26,38 @@ section {
     min-height: 100vh;
 }
 
+section.hero,
+section.end {
+    align-content: center;
+    text-align: center;
+}
+
 section.gallery-slider {
-    height: 200vh;
+    height: 400vh;
     position: relative;
     background-color: beige;
     padding: 100px 0;
 
     #slider-wrapper {
-        position: sticky;
-        top: 60%;
-        gap: 1rem;
+        position: relative;
 
         .slide {
             border-radius: 1rem;
-            box-shadow: 0 0 0 1rem rgb(255, 234, 0);
+            box-shadow: 0 0 0 clamp(0.25rem, 1vw, 1rem) rgb(255, 234, 0);
             position: absolute;
             top: 0;
             left: 0;
-            width: clamp(15rem, 20vw, 35rem);
+            width: clamp(10rem, 25vw, 24rem);
             aspect-ratio: 4/5;
             height: auto;
-            background-color: rgb(33, 33, 33);
+            background: linear-gradient(to bottom, var(--gradient-start), var(--gradient-end));
+            align-content: center;
+            transition: --gradient-start 0.5s ease-out, --gradient-end 0.5s ease-out;
+
+            &:hover {
+                --gradient-start: #fff2af;
+                --gradient-end: #ffea80;
+            }
         }
     }
 }
